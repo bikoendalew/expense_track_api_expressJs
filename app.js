@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express');
 const mongoose=require('mongoose')
 const errorHandler = require('./handlers/errorHandler');
+const userRouters = require('./modules/user/user.routes.js');
 
 
 
@@ -12,9 +13,12 @@ app.use(express.json());
 //model
 require('./models/user.model.js')
 
+//routes
+app.use('/api/user',userRouters)
 app.use(errorHandler);
+
 mongoose.connect(process.env.mongoDB,{}).then(()=>{
-    app.listen(4000,()=>{
+    app.listen(process.env.port,()=>{
         console.log("RUNNING");
     })
 }).catch(()=>{
