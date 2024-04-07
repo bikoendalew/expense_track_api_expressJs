@@ -16,7 +16,7 @@ const transactionSchema=new mongoose.Schema({
         required:true,
         enum:["income","expense"]
     },
-    remarks:{
+    remark:{
         type:String,
         required:true
     }

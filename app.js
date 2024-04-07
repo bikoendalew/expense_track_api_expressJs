@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose=require('mongoose')
 const errorHandler = require('./handlers/errorHandler');
 const userRouters = require('./modules/user/user.routes.js');
+const transactionRoutes = require('./modules/transaction/transaction.js');
 
 
 
@@ -16,6 +17,7 @@ require('./models/transaction.model')
 
 //routes
 app.use('/api/user',userRouters)
+app.use('/api/transaction',transactionRoutes)
 app.use(errorHandler);
 
 mongoose.connect(process.env.mongoDB,{}).then(()=>{
