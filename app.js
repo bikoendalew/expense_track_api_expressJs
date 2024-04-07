@@ -12,6 +12,7 @@ app.use(express.json());
 
 //model
 require('./models/user.model.js')
+require('./models/transaction.model')
 
 //routes
 app.use('/api/user',userRouters)
