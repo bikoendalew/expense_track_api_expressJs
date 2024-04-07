@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const nodemailer=require('nodemailer')
 const bcrypt=require('bcrypt');
+const emailManager = require('../../../manager/emalManage');
 
 const resetPassword=async(req,res)=>{
     const userModel=mongoose.model('user');
@@ -14,7 +15,8 @@ const resetPassword=async(req,res)=>{
     if(!getUser) throw "reset code doesn't much";
     const hashedPassword=await bcrypt.hash(new_password,12)
 
-    await userModel.updateOne({email:email},{password:hashedPassword,reset_code:""},{runValidators:true})
+    await userModel.updateOne({email:email},{password:hashedPassword,reset_code:""},{runValidators:true});
+    await emailManager(email,"you succesfully changed your password","Password Changed")
 
     res.status(200).json({status:"success",message:"succesfully updated password"});
 
