@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require('validator');
 
-const addIncome =async (req, res) => {
+const addExpense =async (req, res) => {
   const userModel = mongoose.model("user");
   const transactionModel = mongoose.model("transaction");
 
@@ -18,17 +18,17 @@ const addIncome =async (req, res) => {
     user_id:req.user._id,
     amount:amount,
     remark:remark,
-    transactionType:'income'
+    transactionType:'expense'
   })
 
-  await userModel.updateOne({_id:req.user._id},{$inc:{
-    balance:amount
-  }},{runValidators:true})
+  await userModel.updateOne({_id:req.user._id},{$inc:{balance:amount* -1}
+    
+  },{runValidators:true})
 
   res.status(200).json({ 
     status: "success", 
-    message:"income added succesfully"
+    message:"expense added succesfully"
 });
 };
 
-module.exports = addIncome;
+module.exports = addExpense;
