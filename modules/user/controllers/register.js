@@ -1,5 +1,8 @@
 const mongoose =require('mongoose')
-const bcrypt=require('bcrypt')
+const bcrypt=require('bcrypt');
+const { create } = require('../../../models/user.model');
+const jwt =require('jsonwebtoken');
+const JwtManager = require('../../../manager/jwtManager');
 
 const Register= async (req,res)=>{
     const userModel=mongoose.model('user');
@@ -17,14 +20,18 @@ if(password!==password_confirm) throw "confirm password"
 if(duplicationError)throw "Email already registerd"
 
 const hashedPassword=await bcrypt.hash(password,12)
-await userModel.create({
+const createUser= await userModel.create({
     name:name,
     email:email,
     password:hashedPassword,
     balance:balance
 })
+const accessToken= JwtManager(createUser)
+
+
    res.status(200).json({
      status:"User Registerd Succesfully",
+     accessToken:accessToken
    })
 }
 module.exports=Register
