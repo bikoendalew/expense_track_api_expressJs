@@ -18,6 +18,8 @@ const resetPassword=async(req,res)=>{
     await userModel.updateOne({email:email},{password:hashedPassword,reset_code:""},{runValidators:true});
     await emailManager(email,"you succesfully changed your password","Password Changed")
 
+    
+
     res.status(200).json({status:"success",message:"succesfully updated password"});
 
 }
