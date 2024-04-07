@@ -19,6 +19,9 @@ const userSchema=new mongoose.Schema({
             required:[true,'Please enter your balance'],
             default:0
         },
+        reset_code:{
+            type:Number
+        }
 
 },
 {timestamps: true}
